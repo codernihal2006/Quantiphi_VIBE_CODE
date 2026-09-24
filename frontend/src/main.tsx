@@ -3,7 +3,9 @@ import {createRoot} from 'react-dom/client';
 import {CalendarDays, MapPin, Clock3, Share2, Sparkles, Users, Bell, ArrowUpRight} from 'lucide-react';
 import './styles.css';
 
-const API='http://localhost:8000';
+// Keep the browser and backend on the same loopback address. Using `localhost`
+// can resolve to IPv6 while the local uvicorn process listens on IPv4.
+const API='';
 type Event={id:string;title:string;venue:string;city:string;date:string;time:string;image_url:string;category:string;description:string;friends_attending:number;user_status?:'interested'|'going'|null};
 type User={id:string;name:string;email:string;city:string};
 async function api(path:string, options:RequestInit={}){const r=await fetch(API+path,{...options,headers:{'Content-Type':'application/json','X-User-Id':localStorage.userId||'',...(options.headers||{})}}); if(!r.ok) throw new Error((await r.json()).detail||'Request failed'); return r.json();}
